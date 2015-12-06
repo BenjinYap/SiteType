@@ -18,8 +18,8 @@ var module = (function (module, $) {
 			e.element.html ('');
 			var html = '';
 
-			for (var i = 0; i < text.length; i++) {
-				var c = text.charAt (i);
+			for (var j = 0; j < text.length; j++) {
+				var c = text.charAt (j);
 				e.chars = c;
 				html += '<span>' + c + '</span>';
 			}
@@ -31,7 +31,8 @@ var module = (function (module, $) {
 
 		function activateElement (e) {
 			var $e = e.element;
-			
+
+
 		}
 	};
 
