@@ -5,7 +5,11 @@
 	z-index:10;
 }
 
-.active {
+.deactive-element {
+	background:gray;
+}
+
+.active-element {
 	background:orange;
 }
 

@@ -3,6 +3,7 @@ var module = (function (module, $) {
 		console.log ('working');
 
 		var elements = [];
+		var elementIndex = 0;
 
 		$('p').each (function () {
 			elements.push ({
@@ -11,7 +12,7 @@ var module = (function (module, $) {
 			});
 		});
 
-		//elements [0].element.text ('aaa');
+		elements [0].element.text ('aaa');
 
 		for (var i = 0; i < elements.length; i++) {
 			var e = elements [i];
@@ -35,11 +36,19 @@ var module = (function (module, $) {
 
 		var prevValue = '';
 
-		activateElement (elements [0]);
+		activateElement (elements [elementIndex]);
+
+		function deactivateElement (eObj) {
+			var $e = eObj.element;
+			$e.removeClass ('active-element');
+			$e.addClass ('deactive-element');
+
+			$input.off ('input');
+		}
 
 		function activateElement (eObj) {
 			var $e = eObj.element;
-			$e.addClass ('active');
+			$e.addClass ('active-element');
 
 			var charIndex = 0;
 			activateChar ($e.find ('span:eq(' + charIndex + ')'));
@@ -52,11 +61,22 @@ var module = (function (module, $) {
 				}
 
 				for (var i = 0; i < value.length; i++) {
-					console.log (value.charAt (i), eObj.chars [charIndex]);
 					if (eObj.chars [charIndex] === value.charAt (i)) {
+						deactivateChar ($e.find ('span:eq(' + charIndex + ')'));
+
 						charIndex++;
-						deactivateChar ($e.find ('span:eq(' + (charIndex - 1) + ')'));
-						activateChar ($e.find ('span:eq(' + charIndex + ')'));
+						
+						if (charIndex < eObj.chars.length) {
+							activateChar ($e.find ('span:eq(' + charIndex + ')'));
+						} else {
+							deactivateElement (eObj);
+
+							elementIndex++;
+
+							if (elementIndex < elements.length) {
+								activateElement (elements [elementIndex]);
+							}
+						}
 					}
 				}
 
