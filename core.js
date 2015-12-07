@@ -32,6 +32,11 @@ var module = (function (module, $) {
 
 		var $input = $('<input type = "text" id = "input-dump" />');
 		$('body').prepend ($input);
+
+		$input.blur (function () {
+			$input.focus ();
+		});
+
 		$input.focus ();
 
 		var prevValue = '';
