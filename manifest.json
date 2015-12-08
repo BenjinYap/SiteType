@@ -5,7 +5,7 @@
 
 	"content_scripts":[
 		{
-			"matches":["http://benjinyap.com/*"],
+			"matches":["http://*/*", "https://*/*"],
 			"js":["jquery-2.1.4.min.js", "core.js", "panel.js"],
 			"css":["app.css"]
 		}

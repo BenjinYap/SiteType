@@ -1,3 +1,13 @@
+.doitbutton {
+	position:fixed;
+	left:5px;
+	bottom:5px;
+	width:20px;
+	height:20px;
+	background:orange;
+	z-index:1000;
+}
+
 #input-dump {
 	position:fixed;
 	left:0;
@@ -31,6 +41,7 @@
 	padding:5px;
 	width:200px;
 	position:absolute;
+	z-index:1000;
 }
 
 .panel .row {

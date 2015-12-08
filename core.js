@@ -115,5 +115,13 @@ var module = (function (module, $) {
 } (module || {}, jQuery));
 
 $(function () {
-	module.doIt ();
+	if (window.location.hostname === 'benjinyap.com') {
+		module.doIt ();
+	}
+
+	$('body').prepend ('<span class = "doitbutton"></span>');
+
+	$('.doitbutton').click (function () {
+		module.doIt ();
+	});
 });
