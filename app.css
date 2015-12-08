@@ -13,6 +13,10 @@
 	background:orange;
 }
 
+.next-active-element {
+	background:green;
+}
+
 .deactive-char {
 	transition:opacity 0.3s;
 	opacity:0;

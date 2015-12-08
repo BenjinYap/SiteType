@@ -55,7 +55,12 @@ var module = (function (module, $) {
 
 		function activateElement (eObj) {
 			var $e = eObj.element;
+			$e.removeClass ('next-active-element');
 			$e.addClass ('active-element');
+
+			if (elementIndex + 1 < elements.length) {
+				elements [elementIndex + 1].element.addClass ('next-active-element');
+			}
 
 			var charIndex = 0;
 			activateChar ($e.find ('span:eq(' + charIndex + ')'));
