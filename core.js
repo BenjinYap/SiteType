@@ -2,6 +2,8 @@ var module = (function (module, $) {
 	module.doIt = function () {
 		console.log ('working');
 
+		module.stats.init ();
+
 		var elements = [];
 		var elementIndex = 0;
 
@@ -69,6 +71,8 @@ var module = (function (module, $) {
 					if (eObj.chars [charIndex] === value.charAt (i)) {
 						deactivateChar ($e.find ('span:eq(' + charIndex + ')'));
 
+						module.stats.incrementCorrectKey ();
+
 						charIndex++;
 						
 						if (charIndex < eObj.chars.length) {
@@ -82,6 +86,8 @@ var module = (function (module, $) {
 								activateElement (elements [elementIndex]);
 							}
 						}
+					} else {
+						module.stats.incrementIncorrectKey ();
 					}
 				}
 

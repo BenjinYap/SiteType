@@ -14,7 +14,8 @@
 }
 
 .deactive-char {
-	visibility:hidden;
+	transition:opacity 0.3s;
+	opacity:0;
 }
 
 .active-char {
