@@ -102,6 +102,7 @@ var module = (function (module, $) {
 
 		function activateChar ($c) {
 			$c.addClass ('active-char');
+			module.stats.movePanel ();
 		}
 	};
 

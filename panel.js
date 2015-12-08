@@ -23,6 +23,8 @@ var module = (function (module, $) {
 
 	var $panel;
 
+	var tether;
+
 	sub.init = function () {
 		$panel = $('<div class = "panel"></div>');
 		$('body').prepend ($panel);
@@ -53,6 +55,13 @@ var module = (function (module, $) {
 		updateValueLabel (NUM_KEYS);
 		updateValueLabel (NUM_INCORRECT_KEYS);
 	};
+
+	sub.movePanel = function () {
+		var $c = $('.active-char');
+		var offset = $c.offset ();
+		offset.top += $c.height ();
+		$panel.offset (offset);
+	}
 
 	function updateValueLabel (stat) {
 		statValueLabels [stat].text (stats [stat].value);

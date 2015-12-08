@@ -21,3 +21,21 @@
 .active-char {
 	background:red;
 }
+
+.panel {
+	background:rgba(255, 255, 255, 0.9);
+	padding:5px;
+	width:200px;
+}
+
+.panel .row {
+	display:flex;
+}
+
+.panel label {
+	flex:3;
+}
+
+.panel span {
+	flex:1;
+}
