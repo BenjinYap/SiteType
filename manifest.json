@@ -6,7 +6,7 @@
 	"content_scripts":[
 		{
 			"matches":["http://*/*", "https://*/*"],
-			"js":["js/vendor/jquery-2.1.4.min.js", "js/core.js", "js/panel.js"],
+			"js":["js/vendor/jquery-2.1.4.min.js", "js/app.js"],
 			"css":["css/app.css"]
 		}
 	],
