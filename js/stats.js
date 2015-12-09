@@ -21,11 +21,10 @@ var module = (function (module, $) {
 	
 	var statValueLabels = {};
 
-	var $panel;
+	var $window;
 
 	sub.init = function () {
-		$panel = module.window.create ({class:'sitetype-stats'});
-		$('body').prepend ($panel);
+		var rows = [];
 
 		for (var stat in stats) {
 			var $row = $('<div class = "sitetype-row"></div>');
@@ -33,15 +32,22 @@ var module = (function (module, $) {
 			$label = $('<span>' + stats [stat].value + '</span>');
 			$row.append ($label);
 			statValueLabels [stat] = $label;
-
-			$panel.append ($row);
+			rows.push ($row);
 		}
+
+		$window = module.window.create ({
+			class:'sitetype-stats',
+			title:'Stats',
+			body:rows,
+		});
+		
+		$('body').append ($window);
 	};
 
 	sub.incrementCorrectKey = function () {
 		stats [NUM_KEYS].value++;
 		stats [NUM_CORRECT_KEYS].value++;
-
+ 
 		updateValueLabel (NUM_KEYS);
 		updateValueLabel (NUM_CORRECT_KEYS);
 	};
@@ -58,7 +64,7 @@ var module = (function (module, $) {
 		var $c = $('.active-char');
 		var offset = $c.offset ();
 		offset.top += $c.height ();
-		$panel.offset (offset);
+		$window.offset (offset);
 	}
 
 	function updateValueLabel (stat) {

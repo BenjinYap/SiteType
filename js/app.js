@@ -2,8 +2,6 @@ var module = (function (module, $) {
 	module.doIt = function () {
 		console.log ('working');
 
-		module.stats.init ();
-
 		var elements = [];
 		var elementIndex = 0;
 
@@ -14,7 +12,12 @@ var module = (function (module, $) {
 			});
 		});
 
-		elements [0].element.text ('aaa');
+		if (elements.length <= 0) {
+			noElementsFound ();
+			return false;
+		}
+
+		module.stats.init ();
 
 		for (var i = 0; i < elements.length; i++) {
 			var e = elements [i];
@@ -109,6 +112,15 @@ var module = (function (module, $) {
 			$c.addClass ('active-char');
 			module.stats.movePanel ();
 		}
+
+		function noElementsFound () {
+			$window = module.window.create ({
+				closable:true,
+				title:'We have a problem',
+				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
+			});
+			$('body').append ($window);
+		}
 	};
 
 	return module;
@@ -148,11 +160,10 @@ var module = (function (module, $) {
 	
 	var statValueLabels = {};
 
-	var $panel;
+	var $window;
 
 	sub.init = function () {
-		$panel = module.window.create ({class:'sitetype-stats'});
-		$('body').prepend ($panel);
+		var rows = [];
 
 		for (var stat in stats) {
 			var $row = $('<div class = "sitetype-row"></div>');
@@ -160,15 +171,22 @@ var module = (function (module, $) {
 			$label = $('<span>' + stats [stat].value + '</span>');
 			$row.append ($label);
 			statValueLabels [stat] = $label;
-
-			$panel.append ($row);
+			rows.push ($row);
 		}
+
+		$window = module.window.create ({
+			class:'sitetype-stats',
+			title:'Stats',
+			body:rows,
+		});
+		
+		$('body').append ($window);
 	};
 
 	sub.incrementCorrectKey = function () {
 		stats [NUM_KEYS].value++;
 		stats [NUM_CORRECT_KEYS].value++;
-
+ 
 		updateValueLabel (NUM_KEYS);
 		updateValueLabel (NUM_CORRECT_KEYS);
 	};
@@ -185,7 +203,7 @@ var module = (function (module, $) {
 		var $c = $('.active-char');
 		var offset = $c.offset ();
 		offset.top += $c.height ();
-		$panel.offset (offset);
+		$window.offset (offset);
 	}
 
 	function updateValueLabel (stat) {
@@ -201,14 +219,32 @@ var module = (function (module, $) {
 	sub.create = function (options) {
 		options = options || {};
 		options.class = options.class || '';
-		
-		var $window = $('<div class = "site-type sitetype-window ' + options.class + '"></div>');
+		options.title = options.title || '';
+		options.body = options.body || '';
+		options.closable = options.closable || false;
+
+		var $window = $('<div class = "sitetype-window ' + options.class + '"></div>');
+		var $header = $('<div class = "sitetype-window-header"></div>');
+		var $body = $('<div class = "sitetype-window-body"></div>');
+
+		$header.append ('<h1 class = "sitetype-window-title">' + options.title + '</h1>');
+
+		if (options.closable) {
+			$close = $('<span class = "sitetype-window-close">×</span>');
+
+			$close.click (function () {
+				$close.off ('click');
+				$window.remove ();
+			});
+
+			$header.append ($close);
+		}
+
+		$body.append (options.body);
+
+		$window.append ($header, $body);
 		return $window;
 	};
-
-	sub.createClosable = function () {
-
-	}
 
 	module.window = sub;
 	return module;

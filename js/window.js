@@ -4,14 +4,32 @@ var module = (function (module, $) {
 	sub.create = function (options) {
 		options = options || {};
 		options.class = options.class || '';
-		
-		var $window = $('<div class = "site-type sitetype-window ' + options.class + '"></div>');
+		options.title = options.title || '';
+		options.body = options.body || '';
+		options.closable = options.closable || false;
+
+		var $window = $('<div class = "sitetype-window ' + options.class + '"></div>');
+		var $header = $('<div class = "sitetype-window-header"></div>');
+		var $body = $('<div class = "sitetype-window-body"></div>');
+
+		$header.append ('<h1 class = "sitetype-window-title">' + options.title + '</h1>');
+
+		if (options.closable) {
+			$close = $('<span class = "sitetype-window-close">×</span>');
+
+			$close.click (function () {
+				$close.off ('click');
+				$window.remove ();
+			});
+
+			$header.append ($close);
+		}
+
+		$body.append (options.body);
+
+		$window.append ($header, $body);
 		return $window;
 	};
-
-	sub.createClosable = function () {
-
-	}
 
 	module.window = sub;
 	return module;

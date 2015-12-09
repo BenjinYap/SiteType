@@ -1,11 +1,37 @@
-.sitetype {
-  box-sizing: border-box; }
-
 .sitetype-window {
-  padding: 10px;
   background: white;
   border: 1px solid black;
-  font-family: 'calibri', sans-serif; }
+  font-family: 'calibri', sans-serif;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 1000; }
+  .sitetype-window :first-child {
+    margin-top: 0; }
+  .sitetype-window :last-child {
+    margin-bottom: 0; }
+  .sitetype-window .sitetype-window-header {
+    padding: 8px;
+    position: relative;
+    min-height: 20px;
+    border-bottom: 1px solid black; }
+    .sitetype-window .sitetype-window-header .sitetype-window-title {
+      font-size: 20px;
+      margin-bottom: 0; }
+    .sitetype-window .sitetype-window-header .sitetype-window-close {
+      position: absolute;
+      right: 8px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      font-size: 22px;
+      line-height: 20px;
+      background: red;
+      cursor: pointer; }
+  .sitetype-window .sitetype-window-body {
+    padding: 8px; }
 
 .doitbutton {
   position: fixed;
@@ -40,10 +66,7 @@
 
 .sitetype-stats {
   background: rgba(255, 255, 255, 0.9);
-  padding: 5px;
-  width: 200px;
-  position: absolute;
-  z-index: 1000; }
+  width: 200px; }
   .sitetype-stats .sitetype-row {
     display: flex; }
   .sitetype-stats label {

@@ -2,8 +2,6 @@ var module = (function (module, $) {
 	module.doIt = function () {
 		console.log ('working');
 
-		module.stats.init ();
-
 		var elements = [];
 		var elementIndex = 0;
 
@@ -14,7 +12,12 @@ var module = (function (module, $) {
 			});
 		});
 
-		elements [0].element.text ('aaa');
+		if (elements.length <= 0) {
+			noElementsFound ();
+			return false;
+		}
+
+		module.stats.init ();
 
 		for (var i = 0; i < elements.length; i++) {
 			var e = elements [i];
@@ -108,6 +111,15 @@ var module = (function (module, $) {
 		function activateChar ($c) {
 			$c.addClass ('active-char');
 			module.stats.movePanel ();
+		}
+
+		function noElementsFound () {
+			$window = module.window.create ({
+				closable:true,
+				title:'We have a problem',
+				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
+			});
+			$('body').append ($window);
 		}
 	};
 
