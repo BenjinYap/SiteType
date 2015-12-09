@@ -92,6 +92,8 @@ var module = (function (module, $) {
 
 							if (elementIndex < elements.length) {
 								activateElement (elements [elementIndex]);
+							} else {
+								gameOver ();
 							}
 						}
 					} else {
@@ -120,6 +122,11 @@ var module = (function (module, $) {
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});
 			$('body').append ($window);
+		}
+
+		function gameOver () {
+			$input.remove ();
+			module.stats.showFinalStats ();
 		}
 	};
 

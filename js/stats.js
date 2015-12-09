@@ -22,10 +22,9 @@ var module = (function (module, $) {
 	var statValueLabels = {};
 
 	var $window;
+	var rows = [];
 
 	sub.init = function () {
-		var rows = [];
-
 		for (var stat in stats) {
 			var $row = $('<div class = "sitetype-row"></div>');
 			$row.append ('<label>' + stats [stat].name + '</label>');
@@ -66,6 +65,24 @@ var module = (function (module, $) {
 		offset.top += $c.height ();
 		$window.offset (offset);
 	}
+
+	sub.showFinalStats = function () {
+		$window.remove ();
+
+		var body = [
+			'<p>You\'ve typed everything! Wasn\'t that fun?</p>',
+			'<p>Here are your final stats:</p>',
+		];
+		body = body.concat (rows);
+
+		$window = module.window.create ({
+			class:'sitetype-stats',
+			closable:true,
+			title:'Well done',
+			body:body,
+		});
+		$('body').append ($window);
+	};
 
 	function updateValueLabel (stat) {
 		statValueLabels [stat].text (stats [stat].value);

@@ -92,6 +92,8 @@ var module = (function (module, $) {
 
 							if (elementIndex < elements.length) {
 								activateElement (elements [elementIndex]);
+							} else {
+								gameOver ();
 							}
 						}
 					} else {
@@ -120,6 +122,11 @@ var module = (function (module, $) {
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});
 			$('body').append ($window);
+		}
+
+		function gameOver () {
+			$input.remove ();
+			module.stats.showFinalStats ();
 		}
 	};
 
@@ -161,10 +168,9 @@ var module = (function (module, $) {
 	var statValueLabels = {};
 
 	var $window;
+	var rows = [];
 
 	sub.init = function () {
-		var rows = [];
-
 		for (var stat in stats) {
 			var $row = $('<div class = "sitetype-row"></div>');
 			$row.append ('<label>' + stats [stat].name + '</label>');
@@ -206,6 +212,24 @@ var module = (function (module, $) {
 		$window.offset (offset);
 	}
 
+	sub.showFinalStats = function () {
+		$window.remove ();
+
+		var body = [
+			'<p>You\'ve typed everything! Wasn\'t that fun?</p>',
+			'<p>Here are your final stats:</p>',
+		];
+		body = body.concat (rows);
+
+		$window = module.window.create ({
+			class:'sitetype-stats',
+			closable:true,
+			title:'Well done',
+			body:body,
+		});
+		$('body').append ($window);
+	};
+
 	function updateValueLabel (stat) {
 		statValueLabels [stat].text (stats [stat].value);
 	}
@@ -217,21 +241,27 @@ var module = (function (module, $) {
 	var sub = module.stats || {};
 
 	sub.create = function (options) {
+		//set default options
 		options = options || {};
 		options.class = options.class || '';
 		options.title = options.title || '';
 		options.body = options.body || '';
 		options.closable = options.closable || false;
 
+		//create jquery elements
 		var $window = $('<div class = "sitetype-window ' + options.class + '"></div>');
 		var $header = $('<div class = "sitetype-window-header"></div>');
 		var $body = $('<div class = "sitetype-window-body"></div>');
 
+		//add the title
 		$header.append ('<h1 class = "sitetype-window-title">' + options.title + '</h1>');
 
+		//add the closing feature
 		if (options.closable) {
+			//add the close button
 			$close = $('<span class = "sitetype-window-close">×</span>');
 
+			//bind the close event
 			$close.click (function () {
 				$close.off ('click');
 				$window.remove ();
@@ -240,8 +270,10 @@ var module = (function (module, $) {
 			$header.append ($close);
 		}
 
+		//add the body
 		$body.append (options.body);
 
+		//add the header and body to the window
 		$window.append ($header, $body);
 		return $window;
 	};
