@@ -23,14 +23,12 @@ var module = (function (module, $) {
 
 	var $panel;
 
-	var tether;
-
 	sub.init = function () {
-		$panel = $('<div class = "panel"></div>');
+		$panel = module.window.create ({class:'sitetype-stats'});
 		$('body').prepend ($panel);
 
 		for (var stat in stats) {
-			var $row = $('<div class = "row"></div>');
+			var $row = $('<div class = "sitetype-row"></div>');
 			$row.append ('<label>' + stats [stat].name + '</label>');
 			$label = $('<span>' + stats [stat].value + '</span>');
 			$row.append ($label);
