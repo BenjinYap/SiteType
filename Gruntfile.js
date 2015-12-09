@@ -2,7 +2,7 @@ module.exports = function (grunt) {
 	grunt.initConfig ({
 		watch:{
 			concat:{
-				files:['js/*.js'],
+				files:['js/*.js', '!js/app.js'],
 				tasks:['concat'],
 			},
 
@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 
 		concat:{
 			dist:{
-				src:['js/*.js'],
+				src:['js/*.js', '!js/app.js'],
 				dest:'js/app.js',
 			},
 		},
