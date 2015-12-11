@@ -44,7 +44,11 @@ var module = (function (module, $) {
 
 		//add the window
 		$('body').append ($window);
+
+		//focus the window
 		$window.focus ();
+
+		return $window;
 	};
 
 	sub.showOverlay = function () {
