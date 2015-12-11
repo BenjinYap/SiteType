@@ -34,13 +34,11 @@ var module = (function (module, $) {
 			rows.push ($row);
 		}
 
-		$window = module.window.create ({
+		$window = module.window.show ({
 			class:'sitetype-stats',
 			title:'Stats',
 			body:rows,
 		});
-		
-		$('body').append ($window);
 	};
 
 	sub.incrementCorrectKey = function () {
@@ -75,13 +73,12 @@ var module = (function (module, $) {
 		];
 		body = body.concat (rows);
 
-		$window = module.window.create ({
+		$window = module.window.show ({
 			class:'sitetype-stats',
 			closable:true,
 			title:'Well done',
 			body:body,
 		});
-		$('body').append ($window);
 	};
 
 	function updateValueLabel (stat) {

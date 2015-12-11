@@ -116,13 +116,12 @@ var module = (function (module, $) {
 		}
 
 		function noElementsFound () {
-			$window = module.window.create ({
+			$window = module.window.show ({
 				closable:true,
 				title:'We have a problem',
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});
-			$('body').append ($window);
-			module.window.addOverlay ();
+			module.window.showOverlay ();
 		}
 
 		function gameOver () {
@@ -181,13 +180,11 @@ var module = (function (module, $) {
 			rows.push ($row);
 		}
 
-		$window = module.window.create ({
+		$window = module.window.show ({
 			class:'sitetype-stats',
 			title:'Stats',
 			body:rows,
 		});
-		
-		$('body').append ($window);
 	};
 
 	sub.incrementCorrectKey = function () {
@@ -222,13 +219,12 @@ var module = (function (module, $) {
 		];
 		body = body.concat (rows);
 
-		$window = module.window.create ({
+		$window = module.window.show ({
 			class:'sitetype-stats',
 			closable:true,
 			title:'Well done',
 			body:body,
 		});
-		$('body').append ($window);
 	};
 
 	function updateValueLabel (stat) {
@@ -241,7 +237,7 @@ var module = (function (module, $) {
 var module = (function (module, $) {
 	var sub = module.stats || {};
 
-	sub.create = function (options) {
+	sub.show = function (options) {
 		//set default options
 		options = options || {};
 		options.class = options.class || '';
@@ -250,7 +246,7 @@ var module = (function (module, $) {
 		options.closable = options.closable || false;
 
 		//create jquery elements
-		var $window = $('<div class = "sitetype-window ' + options.class + '"></div>');
+		var $window = $('<div class = "sitetype-window ' + options.class + '" tabindex = "0"></div>');
 		var $header = $('<div class = "sitetype-window-header"></div>');
 		var $body = $('<div class = "sitetype-window-body"></div>');
 
@@ -264,12 +260,16 @@ var module = (function (module, $) {
 
 			//bind the close event
 			$close.click (function () {
-				$close.off ('click');
-				$window.remove ();
-				$('.sitetype-window-overlay').remove ();
+				sub.destroy ($window);
 			});
 
 			$header.append ($close);
+
+			$window.keydown (function (e) {
+				if (e.keyCode === 27) {
+					sub.destroy ($window);
+				}
+			});
 		}
 
 		//add the body
@@ -277,11 +277,21 @@ var module = (function (module, $) {
 
 		//add the header and body to the window
 		$window.append ($header, $body);
-		return $window;
+
+		//add the window
+		$('body').append ($window);
+		$window.focus ();
 	};
 
-	sub.addOverlay = function () {
+	sub.showOverlay = function () {
 		$('body').append ($('<div class = "sitetype-window-overlay"></div>'));
+	};
+
+	sub.destroy = function ($window) {
+		$window.find ('.sitetype-window-close').off ('click');
+		$window.off ('keydown');
+		$('.sitetype-window-overlay').remove ();
+		$window.remove ();
 	};
 
 	module.window = sub;

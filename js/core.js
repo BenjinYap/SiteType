@@ -116,13 +116,12 @@ var module = (function (module, $) {
 		}
 
 		function noElementsFound () {
-			$window = module.window.create ({
+			$window = module.window.show ({
 				closable:true,
 				title:'We have a problem',
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});
-			$('body').append ($window);
-			module.window.addOverlay ();
+			module.window.showOverlay ();
 		}
 
 		function gameOver () {
