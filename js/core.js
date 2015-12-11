@@ -122,6 +122,7 @@ var module = (function (module, $) {
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});
 			$('body').append ($window);
+			module.window.addOverlay ();
 		}
 
 		function gameOver () {

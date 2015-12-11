@@ -26,6 +26,7 @@ var module = (function (module, $) {
 			$close.click (function () {
 				$close.off ('click');
 				$window.remove ();
+				$('.sitetype-window-overlay').remove ();
 			});
 
 			$header.append ($close);
@@ -37,6 +38,10 @@ var module = (function (module, $) {
 		//add the header and body to the window
 		$window.append ($header, $body);
 		return $window;
+	};
+
+	sub.addOverlay = function () {
+		$('body').append ($('<div class = "sitetype-window-overlay"></div>'));
 	};
 
 	module.window = sub;

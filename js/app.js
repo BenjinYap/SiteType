@@ -122,6 +122,7 @@ var module = (function (module, $) {
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});
 			$('body').append ($window);
+			module.window.addOverlay ();
 		}
 
 		function gameOver () {
@@ -265,6 +266,7 @@ var module = (function (module, $) {
 			$close.click (function () {
 				$close.off ('click');
 				$window.remove ();
+				$('.sitetype-window-overlay').remove ();
 			});
 
 			$header.append ($close);
@@ -276,6 +278,10 @@ var module = (function (module, $) {
 		//add the header and body to the window
 		$window.append ($header, $body);
 		return $window;
+	};
+
+	sub.addOverlay = function () {
+		$('body').append ($('<div class = "sitetype-window-overlay"></div>'));
 	};
 
 	module.window = sub;
