@@ -224,15 +224,26 @@ var module = (function (module, $) {
 		];
 		body = body.concat (rows);
 
+		//create final modal stats window
 		$window = module.window.show ({
 			class:'sitetype-stats',
 			closable:true,
 			title:'Well done',
 			body:body,
-			modal:true,
 		});
+		module.window.showOverlay ();
 
-		
+		//get centered offset
+		var targetOffset = $window.offset ();
+
+		//set final window to position of original stats window
+		$window.offset (offset);
+
+		//animate to center of screen
+		$window.animate ({
+			left:targetOffset.left + 'px',
+			top:targetOffset.top + 'px',
+		}, 500);
 	};
 
 	function updateValueLabel (stat) {
