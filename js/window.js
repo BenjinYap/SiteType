@@ -7,6 +7,8 @@ var module = (function (module, $) {
 		options.class = options.class || '';
 		options.title = options.title || '';
 		options.body = options.body || '';
+		options.position = options.position || 'center center';
+		options.width = options.width || 'initia';
 		options.closable = options.closable || false;
 
 		//create jquery elements
@@ -42,8 +44,20 @@ var module = (function (module, $) {
 		//add the header and body to the window
 		$window.append ($header, $body);
 
+		//set window properties
+		$window.css ('width', options.width);
+		$window.css ('visibility', 'hidden');
+
 		//add the window
 		$('body').append ($window);
+
+		var width = $window.outerWidth ();
+		var height = $window.outerHeight ();
+
+		$window.css ('left', ($(window).width () / 2 - width / 2) + 'px');
+		$window.css ('top', ($(window).height () / 2 - height / 2) + 'px');
+
+		$window.css ('visibility', 'visible');
 
 		//focus the window
 		$window.focus ();

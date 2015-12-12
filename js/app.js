@@ -118,6 +118,7 @@ var module = (function (module, $) {
 		function noElementsFound () {
 			$window = module.window.show ({
 				closable:true,
+				width:'300px',
 				title:'We have a problem',
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});
@@ -211,6 +212,10 @@ var module = (function (module, $) {
 	}
 
 	sub.showFinalStats = function () {
+		//get position of stats window
+		var offset = $window.offset ();
+
+		//remove active stats window
 		$window.remove ();
 
 		var body = [
@@ -224,7 +229,10 @@ var module = (function (module, $) {
 			closable:true,
 			title:'Well done',
 			body:body,
+			modal:true,
 		});
+
+		
 	};
 
 	function updateValueLabel (stat) {
@@ -243,6 +251,8 @@ var module = (function (module, $) {
 		options.class = options.class || '';
 		options.title = options.title || '';
 		options.body = options.body || '';
+		options.position = options.position || 'center center';
+		options.width = options.width || 'initia';
 		options.closable = options.closable || false;
 
 		//create jquery elements
@@ -278,8 +288,20 @@ var module = (function (module, $) {
 		//add the header and body to the window
 		$window.append ($header, $body);
 
+		//set window properties
+		$window.css ('width', options.width);
+		$window.css ('visibility', 'hidden');
+
 		//add the window
 		$('body').append ($window);
+
+		var width = $window.outerWidth ();
+		var height = $window.outerHeight ();
+
+		$window.css ('left', ($(window).width () / 2 - width / 2) + 'px');
+		$window.css ('top', ($(window).height () / 2 - height / 2) + 'px');
+
+		$window.css ('visibility', 'visible');
 
 		//focus the window
 		$window.focus ();

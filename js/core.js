@@ -118,6 +118,7 @@ var module = (function (module, $) {
 		function noElementsFound () {
 			$window = module.window.show ({
 				closable:true,
+				width:'300px',
 				title:'We have a problem',
 				body:'<p>I regret to inform you that failed to find any suitable typable sections.</p>',
 			});

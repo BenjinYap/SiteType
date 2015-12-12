@@ -65,6 +65,10 @@ var module = (function (module, $) {
 	}
 
 	sub.showFinalStats = function () {
+		//get position of stats window
+		var offset = $window.offset ();
+
+		//remove active stats window
 		$window.remove ();
 
 		var body = [
@@ -78,7 +82,10 @@ var module = (function (module, $) {
 			closable:true,
 			title:'Well done',
 			body:body,
+			modal:true,
 		});
+
+		
 	};
 
 	function updateValueLabel (stat) {
